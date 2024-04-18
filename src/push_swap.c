@@ -11,14 +11,15 @@
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
+#include "debug_utils.h"
 
 int	main(int argc, char **argv)
 {
 	t_stack_node	*stack_a;
-	t_stack_node	*stack_b;
+	//	t_stack_node	*stack_b;
 
 	stack_a = NULL;
-	stack_b = NULL;
+	//	stack_b = NULL;
 	ft_printf("argc			->	%d\n", argc);
 	ft_printf("argv[0]		->	%s\n", argv[0]);
 	ft_printf("argv[1]		->	%s\n", argv[1]);
@@ -33,6 +34,9 @@ int	main(int argc, char **argv)
 	{
 		argv = ft_split(argv[1], ' ');
 		stack_init(&stack_a, argv);
+		reverse_rotate_a(&stack_a, 0);
+		ft_printf("\n");
+		print_stack(&stack_a);	
 	}
 	else
 	{

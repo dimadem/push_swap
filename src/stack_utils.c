@@ -12,6 +12,28 @@
 
 #include "../inc/push_swap.h"
 
+int	ft_stacksize(t_stack_node *node)
+{
+	int	size;
+
+	size = 0;
+	while (node)
+	{
+		node = node->next;
+		size++;
+	}
+	return (size);
+}
+
+t_stack_node	*find_last_node(t_stack_node *head)
+{
+	if(head == NULL)
+		return (NULL);
+	while(head->next)
+		head = head->next;
+	return (head);
+}
+
 long int	ft_atol(char *str)
 {
 	long int result = 0;
@@ -59,7 +81,6 @@ int	check_syntax(char *str)
 
 int	check_repetition(t_stack_node *stack, int nbr)
 {
-	ft_printf("\ncheck_repetition\n");
 	if (stack == NULL)
 		return (EXIT_SUCCESS);
 	while(stack)

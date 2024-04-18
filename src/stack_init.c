@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
+#include "debug_utils.h"
 
 void	add_node(t_stack_node **stack, int nbr);
 
@@ -24,33 +25,23 @@ void	stack_init(t_stack_node **stack, char **argv)
 	while(argv[++i])
 	{
 		if (check_syntax(argv[i]))
-			ft_printf("not a number\n");
+			error();
 		nbr = ft_atol(argv[i]);
 		if (INT_MIN > nbr || nbr > INT_MAX)
-			ft_printf("less or more than INT	->	%d\n", nbr);	
+			error();
 		if (check_repetition(*stack, (int)nbr))
-			ft_printf("this number is already in stack!\n");
+			error();
 		add_node(stack, (int)nbr);
 		ft_printf("nbr[%d]		->	%d\n", i, nbr);
 	}
 	ft_printf("\nstack values\n");
-	t_stack_node	*temp_node;
-	temp_node = *stack;
-	while (temp_node != NULL)
-	{
-		ft_printf("current 	->	%p\n", temp_node);
-		ft_printf("value	->	%d\n", temp_node->value);
-		ft_printf("prev		->	%p\n", temp_node->prev);
-		ft_printf("next		->	%p\n", temp_node->next);
-		temp_node = temp_node->next;
-	}
-
+	print_stack(stack);
 }
 
 void	add_node(t_stack_node **head, int nbr)
 {
 	t_stack_node	*new_node;	
-	t_stack_node	*temp_node_last;
+	t_stack_node	*curr_node;
 
 	ft_printf("\nadd node\n");
 	new_node = (t_stack_node *)malloc(sizeof(t_stack_node));
@@ -64,9 +55,9 @@ void	add_node(t_stack_node **head, int nbr)
 		*head = new_node;
 		return ;
 	}
-	temp_node_last = *head;
-	while (temp_node_last->next != NULL)
-		temp_node_last = temp_node_last->next;
-	temp_node_last->next = new_node;
-	new_node->prev = temp_node_last;
+	curr_node = *head;
+	while (curr_node->next != NULL)
+		curr_node = curr_node->next;
+	curr_node->next = new_node;
+	new_node->prev = curr_node;
 }
