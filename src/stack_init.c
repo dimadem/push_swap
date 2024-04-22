@@ -6,7 +6,7 @@
 /*   By: dmdemirk <dmdemirk@student.42london.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:54:08 by dmdemirk          #+#    #+#             */
-/*   Updated: 2024/04/17 18:32:54 by dmdemirk         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:21:47 by dmdemirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "debug_utils.h"
 
 void	add_node(t_stack_node **stack, int nbr);
+bool	stack_is_sorted(t_stack_node *stack);
 
 void	stack_init(t_stack_node **stack, char **argv)
 {
@@ -21,8 +22,12 @@ void	stack_init(t_stack_node **stack, char **argv)
 	int		i;
 
 	ft_printf("\nstack init\n");
-	i = -1;
-	while(argv[++i])
+	ft_printf("%s\n", argv[0]);
+	if (ft_strncmp(argv[0], "./push_swap", ft_strlen("./push_swap")) == 0)
+		i = 0;
+	else
+		i = -1;
+	while (argv[++i])
 	{
 		if (check_syntax(argv[i]))
 			error();
@@ -60,4 +65,17 @@ void	add_node(t_stack_node **head, int nbr)
 		curr_node = curr_node->next;
 	curr_node->next = new_node;
 	new_node->prev = curr_node;
+}
+
+bool	stack_is_sorted(t_stack_node *stack)
+{
+	if (!stack)
+		return (false);
+	while (stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (false);
+				stack = stack->next;
+	}
+	return (true);
 }

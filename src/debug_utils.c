@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmdemirk <dmdemirk@student.42london.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/22 18:54:00 by dmdemirk          #+#    #+#             */
+/*   Updated: 2024/04/22 18:55:13 by dmdemirk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/push_swap.h"
 
 void	print_stack(t_stack_node **stack)
 {
 	t_stack_node	*temp_node;
+
 	temp_node = *stack;
 	while (temp_node != NULL)
 	{

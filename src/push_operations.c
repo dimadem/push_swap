@@ -6,7 +6,7 @@
 /*   By: dmdemirk <dmdemirk@student.42london.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:20:43 by dmdemirk          #+#    #+#             */
-/*   Updated: 2024/04/17 16:18:59 by dmdemirk         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:52:21 by dmdemirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,17 @@ void	push_b(t_stack_node **stack_b, t_stack_node **stack_a, bool checker)
 	push(stack_b, stack_a);
 	if (!checker)
 		write(1, "pb\n", 3);
-
 }
 
 static void	push(t_stack_node **dest, t_stack_node **src)
 {
 	t_stack_node	*push_node;
 
-	if(*src == NULL)
+	if (*src == NULL)
 		return ;
 	push_node = *src;
 	*src = (*src)->next;
-	if(*src)
+	if (*src)
 		(*src)->prev = NULL;
 	push_node->prev = NULL;
 	if (*dest == NULL)

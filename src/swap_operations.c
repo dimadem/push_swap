@@ -6,7 +6,7 @@
 /*   By: dmdemirk <dmdemirk@student.42london.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:21:04 by dmdemirk          #+#    #+#             */
-/*   Updated: 2024/04/17 12:54:19 by dmdemirk         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:37:25 by dmdemirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void	swap(t_stack_node **head);
 void	swap_a(t_stack_node **stack_a, bool checker)
 {
 	swap(stack_a);
-	if(!checker)
+	if (!checker)
 		write(1, "sa\n", 3);
 }
 
 void	swap_b(t_stack_node **stack_b, bool checker)
 {
 	swap(stack_b);
-	if(!checker)
+	if (!checker)
 		write(1, "sb\n", 3);
 }
 
@@ -32,7 +32,7 @@ void	swap_s(t_stack_node **stack_a, t_stack_node **stack_b, bool checker)
 {
 	swap(stack_a);
 	swap(stack_b);
-	if(!checker)
+	if (!checker)
 		write(1, "ss\n", 3);
 }
 
@@ -46,7 +46,7 @@ static void	swap(t_stack_node **head)
 	*head = (*head)->next;
 	(*head)->prev->prev = *head;
 	(*head)->prev->next = (*head)->next;
-	if((*head)->next)
+	if ((*head)->next)
 		(*head)->next->prev = (*head)->prev;
 	(*head)->next = (*head)->prev;
 	(*head)->prev = NULL;

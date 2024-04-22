@@ -6,7 +6,7 @@
 /*   By: dmdemirk <dmdemirk@student.42london.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:20:53 by dmdemirk          #+#    #+#             */
-/*   Updated: 2024/04/17 12:53:50 by dmdemirk         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:51:43 by dmdemirk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	reverse_rotate_b(t_stack_node **stack_b, bool checker)
 		write(1, "rrb\n", 4);
 }
 
-void	reverse_rotate_r(t_stack_node **stack_a, t_stack_node **stack_b, bool checker)
+void	reverse_rotate_r(t_stack_node **stack_a,
+			t_stack_node **stack_b, bool checker)
 {
 	reverse_rotate(stack_a);
 	reverse_rotate(stack_b);
@@ -39,7 +40,7 @@ void	reverse_rotate_r(t_stack_node **stack_a, t_stack_node **stack_b, bool check
 static void	reverse_rotate(t_stack_node **stack)
 {
 	t_stack_node	*last_node;
-	int	len;
+	int				len;
 
 	len = ft_stacksize(*stack);
 	if (*stack == NULL || 1 == len)
