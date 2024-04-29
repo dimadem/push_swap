@@ -11,6 +11,8 @@ CYAN		=	\033[0;96m
 WHITE		=	\033[0;97m
 
 NAME = push_swap
+NAME_BONUS = checker
+NAME_PUSH_SWAP_LIB = libpush_swap.a
 
 COMPILER			=	cc
 FLAGS				=	-Wall -Wextra -Werror -g
@@ -23,33 +25,52 @@ INCLUDES			=	-I$(EXTERNAL_DIR)/ft_printf/src
 
 # src
 SRC_DIR				=	./src
-SOURCES				=	$(wildcard $(SRC_DIR)/*.c)
+SRC_BONUS_DIR		=	./src_bonus
+SRC_MAIN			=	$(SRC_DIR)/push_swap.c
+SOURCES_COMMON 		=	$(wildcard $(SRC_DIR)/common/*.c)
+SOURCES_BONUS		=	$(wildcard $(SRC_BONUS_DIR)/*.c)
+
 
 # build
 BUILD_DIR 			=	./build
-OBJS 				= 	$(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:%.c=%.o)))
+OBJ_MAIN			=	$(SRC_MAIN:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+OBJS_COMMON			= 	$(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES_COMMON:%.c=%.o)))
 OBJS_BONUS			=	$(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES_BONUS:%.c=%.o)))
 
-
+# lib
+PUSH_SWAP_LIB		=	$(BUILD_DIR)/lib_push_swap.a
 
 all: 					$(NAME)
 
-$(NAME):	$(FT_PRINTF) $(OBJS)
-	@echo "$(WHITE)Building push_swap$(DEF_COLOR)"
-	@$(COMPILER) $(FLAGS) $(INCLUDES) $(OBJS) -o $(NAME) $(FT_PRINTF)
-	@file $(NAME)
-	@echo "$(GREEN)push_swap ready$(DEF_COLOR)"
+$(NAME):				$(PUSH_SWAP_LIB) $(FT_PRINTF) $(OBJ_MAIN)
+	@$(COMPILER) $(FLAGS) $(INCLUDES) $(OBJ_MAIN) $(PUSH_SWAP_LIB) $(FT_PRINTF) -o $(NAME)
+	@echo "$(GREEN)push_swap compiled$(DEF_COLOR)"
 
-$(OBJS):	$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(BUILD_DIR)
-	@$(COMPILER) $(FLAGS) $(INCLUDES) -c $< -o $@
+$(NAME_BONUS):			$(PUSH_SWAP_LIB) $(FT_PRINTF) $(OBJS_BONUS)
+	@$(COMPILER) $(FLAGS) $(INCLUDES) $(OBJS_BONUS) $(PUSH_SWAP_LIB) $(FT_PRINTF) -o $(NAME_BONUS)
+	@echo "$(GREEN)checker compiled$(DEF_COLOR)"
 
-$(OBJS_BONUS):	$(BUILD_DIR)/%.o: $(SRC_BONUS_DIR)/%.c
-	@mkdir -p $(BUILD_DIR)
-	@$(COMPILER) $(FLAGS) $(INCLUDES) -c $< -o $@
+$(PUSH_SWAP_LIB):		$(OBJS_COMMON)
+	@$(AR) $(PUSH_SWAP_LIB) $(OBJS_COMMON)
+	@echo "$(GREEN)push_swap lib compiled$(DEF_COLOR)"
 
 $(FT_PRINTF):
 	@cd $(EXTERNAL_DIR)/ft_printf && make
+	@echo "$(GREEN)ft_printf compiled$(DEF_COLOR)"
+
+$(BUILD_DIR)/%.o:		$(SRC_DIR)/%.c
+	@mkdir -p $(BUILD_DIR)
+	@$(COMPILER) $(FLAGS) $(INCLUDES) -c $< -o $@
+
+$(BUILD_DIR)/%.o:		$(SRC_DIR)/common/%.c
+	@mkdir -p $(BUILD_DIR)
+	@$(COMPILER) $(FLAGS) $(INCLUDES) -c $< -o $@
+
+$(BUILD_DIR)/%.o:		$(SRC_BONUS_DIR)/%.c
+	@mkdir -p $(BUILD_DIR)
+	@$(COMPILER) $(FLAGS) $(INCLUDES) -c $< -o $@
+
+bonus:					$(NAME_BONUS)
 
 clean:
 	@echo "$(RED)Cleaning process"
